@@ -24,7 +24,7 @@ const generateCookie = (tokenData: TokenData): string => {
 
 @Service()
 export class AuthService {
-  public async signup(userData: CreateUserDto): Promise<{ cookie: string; user: User }> {
+  public async signup(userData: CreateUserDto): Promise<{ user: User }> {
     const existingUser: User = await DB.Users.findOne({
       where: { email: userData.email },
     });
@@ -37,14 +37,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const tokenData = generateToken(newUser);
-
-    newUser.token = tokenData.token;
-    await DB.Users.update({ token: tokenData.token }, { where: { id: newUser.id } });
-
-    const cookie = generateCookie(tokenData);
-
-    return { cookie, user: newUser };
+    return { user: newUser };
   }
 
   public async login(userData: CreateUserDto): Promise<{ cookie: string; user: User }> {
