@@ -48,6 +48,9 @@ export default function (sequelize: Sequelize): typeof CouponModel {
     {
       tableName: 'coupons',
       sequelize,
+      defaultScope: {
+        raw: true,
+      },
     },
   );
 
