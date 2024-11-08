@@ -1,0 +1,58 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: suhye0n/pointify
+          stage: main
+          yaml: |
+            name: pointify-server-manager
+            app: node@18
+            options:
+              ports: "3000"
+              install: npm i
+              build: npm run build
+              start: npm run start
+              env:
+                - name: PORT
+                  value: "3000"
+                - name: DB_USER
+                  value: root
+                - name: DB_PASSWORD
+                  value: sh011121
+                - name: DB_HOST
+                  value: svc.sel4.cloudtype.app
+                - name: DB_PORT
+                  value: "30241"
+                - name: DB_DATABASE
+                  value: pointify
+                - name: SECRET_KEY
+                  value: secretKey
+                - name: LOG_FORMAT
+                  value: dev
+                - name: LOG_DIR
+                  value: ../logs
+                - name: ORIGIN
+                  value: "*"
+                - name: CREDENTIALS
+                  value: "true"
+              buildenv: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
