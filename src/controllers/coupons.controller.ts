@@ -3,13 +3,15 @@ import { Container } from 'typedi';
 import { CreateCouponDto } from '@dtos/coupons.dto';
 import { Coupon } from '@interfaces/coupons.interface';
 import { CouponService } from '@services/coupons.service';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 
 export class CouponController {
   private couponService = Container.get(CouponService);
 
-  public getCoupons = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getCoupons = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const coupons: Coupon[] = await this.couponService.findAllCoupon();
+      const userId = req.user.id;
+      const coupons: Coupon[] = await this.couponService.findAllCoupon(userId);
       res.status(200).json({ data: coupons, message: 'findAll' });
     } catch (error) {
       next(error);

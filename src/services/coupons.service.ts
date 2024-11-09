@@ -6,8 +6,12 @@ import { Coupon } from '@interfaces/coupons.interface';
 
 @Service()
 export class CouponService {
-  public async findAllCoupon(): Promise<Coupon[]> {
-    const coupons: Coupon[] = await DB.Coupons.findAll();
+  public async findAllCoupon(userId: number): Promise<Coupon[]> {
+    const coupons: Coupon[] = await DB.Coupons.findAll({
+      where: {
+        userId: userId,
+      },
+    });
     return coupons;
   }
 
