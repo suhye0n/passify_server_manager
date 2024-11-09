@@ -3,16 +3,55 @@ import { DB } from '@database';
 import { CreateCouponDto } from '@dtos/coupons.dto';
 import { HttpException } from '@/exceptions/httpException';
 import { Coupon } from '@interfaces/coupons.interface';
+import { Op } from 'sequelize';
 
 @Service()
 export class CouponService {
-  public async findAllCoupon(userId: number): Promise<Coupon[]> {
-    const coupons: Coupon[] = await DB.Coupons.findAll({
-      where: {
-        userId: userId,
-      },
+  public async findAllCoupon(
+    userId: number,
+    offset: number,
+    limit: number,
+    query: { [key: string]: any },
+    fromDate?: Date,
+    toDate?: Date,
+  ): Promise<{ coupons: Coupon[]; count: number }> {
+    const whereOptions: any = { userId };
+    const modelAttributes = Object.keys(DB.Coupons.rawAttributes);
+
+    for (const [key, value] of Object.entries(query)) {
+      if (modelAttributes.includes(key) && value !== '' && key !== 'isDeleted') {
+        if (key === 'id') {
+          whereOptions[key] = Number(value);
+        } else {
+          whereOptions[key] = {
+            [Op.like]: `%${value}%`,
+          };
+        }
+      }
+    }
+
+    if (fromDate && toDate) {
+      whereOptions.createdAt = {
+        [Op.between]: [fromDate, toDate],
+      };
+    } else if (fromDate) {
+      whereOptions.createdAt = {
+        [Op.gte]: fromDate,
+      };
+    } else if (toDate) {
+      whereOptions.createdAt = {
+        [Op.lte]: toDate,
+      };
+    }
+
+    const { rows: coupons, count } = await DB.Coupons.findAndCountAll({
+      where: whereOptions,
+      offset,
+      limit,
+      order: [['createdAt', 'DESC']],
     });
-    return coupons;
+
+    return { coupons, count };
   }
 
   public async findCouponById(couponId: number): Promise<Coupon> {

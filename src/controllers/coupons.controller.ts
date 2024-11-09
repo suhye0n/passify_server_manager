@@ -10,9 +10,13 @@ export class CouponController {
 
   public getCoupons = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
+      const { offset = 0, limit = 10, fromAt, toAt, ...query } = req.query;
+      const fromDate = fromAt ? new Date(fromAt as string) : undefined;
+      const toDate = toAt ? new Date(toAt as string) : undefined;
       const userId = req.user.id;
-      const coupons: Coupon[] = await this.couponService.findAllCoupon(userId);
-      res.status(200).json({ data: coupons, message: 'findAll' });
+
+      const { coupons, count } = await this.couponService.findAllCoupon(userId, Number(offset), Number(limit), query, fromDate, toDate);
+      res.status(200).json({ count, data: coupons, message: 'findAll' });
     } catch (error) {
       next(error);
     }

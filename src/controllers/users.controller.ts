@@ -9,8 +9,12 @@ export class UserController {
 
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const users: User[] = await this.userService.findAllUser();
-      res.status(200).json({ data: users, message: 'findAll' });
+      const { offset = 0, limit = 10, fromAt, toAt, ...query } = req.query;
+      const fromDate = fromAt ? new Date(fromAt as string) : undefined;
+      const toDate = toAt ? new Date(toAt as string) : undefined;
+
+      const { users, count } = await this.userService.findAllUser(Number(offset), Number(limit), query, fromDate, toDate);
+      res.status(200).json({ count, data: users, message: 'findAll' });
     } catch (error) {
       next(error);
     }
