@@ -1,6 +1,7 @@
 export enum CouponType {
   COUPON = 'COUPON',
   CARD = 'CARD',
+  POINT = 'POINT',
 }
 
 export interface Coupon {
