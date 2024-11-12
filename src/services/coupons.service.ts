@@ -63,7 +63,7 @@ export class CouponService {
 
   public async createCoupon(couponData: CreateCouponDto): Promise<Coupon> {
     const existingCoupon: Coupon = await DB.Coupons.findOne({
-      where: { barcode: couponData.barcode, userId: couponData.userId },
+      where: { barcode: couponData.barcode, userId: couponData.userId, type: couponData.type },
     });
     if (existingCoupon) throw new HttpException(409, `This barcode ${couponData.barcode} already exists`);
 

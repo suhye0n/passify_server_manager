@@ -1,4 +1,5 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsInt, IsOptional } from 'class-validator';
+import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+import { CouponType } from '@interfaces/coupons.interface';
 
 export class CreateCouponDto {
   @IsNotEmpty()
@@ -20,6 +21,10 @@ export class CreateCouponDto {
   @IsOptional()
   @IsInt()
   public tagId?: number;
+
+  @IsNotEmpty()
+  @IsEnum(CouponType)
+  public type: CouponType;
 }
 
 export class UpdateCouponDto {
@@ -38,4 +43,8 @@ export class UpdateCouponDto {
   @IsOptional()
   @IsInt()
   public tagId?: number;
+
+  @IsOptional()
+  @IsEnum(CouponType)
+  public type?: CouponType;
 }

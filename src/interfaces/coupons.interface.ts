@@ -1,3 +1,8 @@
+export enum CouponType {
+  COUPON = 'COUPON',
+  CARD = 'CARD',
+}
+
 export interface Coupon {
   id?: number;
   userId: number;
@@ -5,4 +10,5 @@ export interface Coupon {
   barcode: string;
   memo?: string;
   tagId?: number;
+  type: CouponType;
 }

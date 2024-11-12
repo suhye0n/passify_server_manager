@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
-import { Coupon } from '@/interfaces/coupons.interface';
+import { Coupon, CouponType } from '@interfaces/coupons.interface';
 
-export type CouponCreationAttributes = Optional<Coupon, 'id' | 'barcode' | 'memo' | 'userId'>;
+export type CouponCreationAttributes = Optional<Coupon, 'id' | 'barcode' | 'memo' | 'userId' | 'type'>;
 
 export class CouponModel extends Model<Coupon, CouponCreationAttributes> implements Coupon {
   public id: number;
@@ -10,6 +10,7 @@ export class CouponModel extends Model<Coupon, CouponCreationAttributes> impleme
   public barcode: string;
   public memo?: string;
   public tagId?: number;
+  public type: CouponType;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -54,6 +55,11 @@ export default function (sequelize: Sequelize): typeof CouponModel {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
+      },
+      type: {
+        type: DataTypes.ENUM(...Object.values(CouponType)),
+        allowNull: false,
+        defaultValue: CouponType.COUPON,
       },
     },
     {
