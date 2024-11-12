@@ -6,9 +6,13 @@ export class CreateCouponDto {
   @IsInt()
   public userId: number;
 
+  @IsOptional() // TODO: 필수값으로 변경
+  @IsString()
+  public titleId?: string;
+
   @IsNotEmpty()
   @IsString()
-  public name: string;
+  public name: string; // TODO: 삭제
 
   @IsNotEmpty()
   @IsString()
@@ -30,7 +34,11 @@ export class CreateCouponDto {
 export class UpdateCouponDto {
   @IsOptional()
   @IsString()
-  public name?: string;
+  public titleId?: string;
+
+  @IsOptional()
+  @IsString()
+  public name?: string; // TODO: 삭제
 
   @IsOptional()
   @IsString()

@@ -7,7 +7,8 @@ export enum CouponType {
 export interface Coupon {
   id?: number;
   userId: number;
-  name: string;
+  titleId?: number; // TODO: 필수값으로 변경
+  name?: string; // TODO: 삭제
   barcode: string;
   memo?: string;
   tagId?: number;

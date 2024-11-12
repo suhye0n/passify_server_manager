@@ -6,7 +6,8 @@ export type CouponCreationAttributes = Optional<Coupon, 'id' | 'barcode' | 'memo
 export class CouponModel extends Model<Coupon, CouponCreationAttributes> implements Coupon {
   public id: number;
   public userId: number;
-  public name: string;
+  public titleId?: number; // TODO: 필수값으로 변경
+  public name: string; // TODO: 삭제
   public barcode: string;
   public memo?: string;
   public tagId?: number;
@@ -34,7 +35,18 @@ export default function (sequelize: Sequelize): typeof CouponModel {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      titleId: {
+        type: DataTypes.INTEGER,
+        allowNull: true, // TODO: 필수값으로 변경
+        references: {
+          model: 'titles',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      },
       name: {
+        // TODO: 삭제
         allowNull: false,
         type: DataTypes.STRING(45),
       },

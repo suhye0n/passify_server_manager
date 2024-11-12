@@ -5,6 +5,7 @@ import { logger } from '@utils/logger';
 import UserModel from '@models/users.model';
 import CouponModel from '@models/coupons.model';
 import TagModel from '@models/tags.model';
+import TitleModel from '@models/titles.model';
 
 const sequelize = new Sequelize.Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
@@ -35,6 +36,7 @@ export const DB = {
   Users: UserModel(sequelize),
   Coupons: CouponModel(sequelize),
   Tags: TagModel(sequelize),
+  Titles: TitleModel(sequelize),
   sequelize,
   Sequelize,
 };
