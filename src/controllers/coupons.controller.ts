@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { CreateCouponDto } from '@dtos/coupons.dto';
+import { CreateCouponDto, UpdateCouponDto } from '@dtos/coupons.dto';
 import { Coupon } from '@interfaces/coupons.interface';
 import { CouponService } from '@services/coupons.service';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -45,7 +45,7 @@ export class CouponController {
   public updateCoupon = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const couponId = Number(req.params.id);
-      const couponData: CreateCouponDto = req.body;
+      const couponData: UpdateCouponDto = req.body;
       const updatedCoupon: Coupon = await this.couponService.updateCoupon(couponId, couponData);
       res.status(200).json({ data: updatedCoupon, message: 'updated' });
     } catch (error) {

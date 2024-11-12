@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Container } from 'typedi';
-import { CreateTagDto } from '@dtos/tags.dto';
+import { CreateTagDto, UpdateTagDto } from '@dtos/tags.dto';
 import { Tag } from '@interfaces/tags.interface';
 import { TagService } from '@services/tags.service';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -45,7 +45,7 @@ export class TagController {
   public updateTag = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const tagId = Number(req.params.id);
-      const tagData: CreateTagDto = req.body;
+      const tagData: UpdateTagDto = req.body;
       const updatedTag: Tag = await this.tagService.updateTag(tagId, tagData);
       res.status(200).json({ data: updatedTag, message: 'updated' });
     } catch (error) {

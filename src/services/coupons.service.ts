@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { DB } from '@database';
-import { CreateCouponDto } from '@dtos/coupons.dto';
+import { CreateCouponDto, UpdateCouponDto } from '@dtos/coupons.dto';
 import { HttpException } from '@/exceptions/httpException';
 import { Coupon } from '@interfaces/coupons.interface';
 import { Op } from 'sequelize';
@@ -71,7 +71,7 @@ export class CouponService {
     return newCoupon;
   }
 
-  public async updateCoupon(couponId: number, couponData: CreateCouponDto): Promise<Coupon> {
+  public async updateCoupon(couponId: number, couponData: UpdateCouponDto): Promise<Coupon> {
     const couponToUpdate: Coupon = await DB.Coupons.findByPk(couponId);
     if (!couponToUpdate) throw new HttpException(409, "Coupon doesn't exist");
 

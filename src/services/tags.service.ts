@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { DB } from '@database';
-import { CreateTagDto } from '@dtos/tags.dto';
+import { CreateTagDto, UpdateTagDto } from '@dtos/tags.dto';
 import { HttpException } from '@/exceptions/httpException';
 import { Tag } from '@interfaces/tags.interface';
 import { Op } from 'sequelize';
@@ -71,7 +71,7 @@ export class TagService {
     return newTag;
   }
 
-  public async updateTag(tagId: number, tagData: CreateTagDto): Promise<Tag> {
+  public async updateTag(tagId: number, tagData: UpdateTagDto): Promise<Tag> {
     const tagToUpdate: Tag = await DB.Tags.findByPk(tagId);
     if (!tagToUpdate) throw new HttpException(409, "Tag doesn't exist");
 
