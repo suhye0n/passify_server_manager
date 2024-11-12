@@ -9,6 +9,7 @@ export class CouponModel extends Model<Coupon, CouponCreationAttributes> impleme
   public name: string;
   public barcode: string;
   public memo?: string;
+  public tagId?: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -43,6 +44,16 @@ export default function (sequelize: Sequelize): typeof CouponModel {
       memo: {
         allowNull: true,
         type: DataTypes.TEXT,
+      },
+      tagId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'tags',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
     },
     {

@@ -43,7 +43,7 @@ export class App {
 
   private async setupDatabaseConnection() {
     try {
-      await DB.sequelize.sync({ force: false });
+      await DB.sequelize.sync({ alter: true });
       logger.info('Database connection established successfully.');
     } catch (error) {
       logger.error('Failed to connect to the database.', error);
