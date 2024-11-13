@@ -2,17 +2,13 @@ import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator
 import { CouponType } from '@interfaces/coupons.interface';
 
 export class CreateCouponDto {
-  @IsNotEmpty()
-  @IsInt()
-  public userId: number;
-
   @IsOptional() // TODO: 필수값으로 변경
-  @IsString()
-  public titleId?: string;
+  @IsInt()
+  public titleId?: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  public name: string; // TODO: 삭제
+  public name?: string; // TODO: 삭제
 
   @IsNotEmpty()
   @IsString()
@@ -33,8 +29,8 @@ export class CreateCouponDto {
 
 export class UpdateCouponDto {
   @IsOptional()
-  @IsString()
-  public titleId?: string;
+  @IsInt()
+  public titleId?: number;
 
   @IsOptional()
   @IsString()

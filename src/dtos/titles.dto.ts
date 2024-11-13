@@ -2,10 +2,6 @@ import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator
 import { CouponType } from '@interfaces/coupons.interface';
 
 export class CreateTitleDto {
-  @IsOptional()
-  @IsInt()
-  public userId?: number;
-
   @IsNotEmpty()
   @IsString()
   public name: string;

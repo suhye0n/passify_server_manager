@@ -32,11 +32,12 @@ export class TitleController {
     }
   };
 
-  public createTitle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createTitle = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const titleData: CreateTitleDto = req.body;
       const icon = req.file ? `/uploads/icons/${req.file.filename}` : null;
-      const newTitle: Title = await this.titleService.createTitle({ ...titleData, icon });
+      const userId = req.user.id;
+      const newTitle: Title = await this.titleService.createTitle(userId, { ...titleData, icon });
       res.status(201).json({ data: newTitle, message: 'created' });
     } catch (error) {
       next(error);

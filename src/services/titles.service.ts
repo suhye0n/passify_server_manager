@@ -62,13 +62,13 @@ export class TitleService {
     return title;
   }
 
-  public async createTitle(titleData: CreateTitleDto): Promise<Title> {
+  public async createTitle(userId: number, titleData: CreateTitleDto): Promise<Title> {
     const existingTitle: Title = await DB.Titles.findOne({
-      where: { name: titleData.name, userId: titleData.userId, type: titleData.type },
+      where: { name: titleData.name, userId, type: titleData.type },
     });
     if (existingTitle) throw new HttpException(409, `This name ${titleData.name} already exists`);
 
-    const newTitle: Title = await DB.Titles.create(titleData);
+    const newTitle: Title = await DB.Titles.create({ ...titleData, userId });
     return newTitle;
   }
 

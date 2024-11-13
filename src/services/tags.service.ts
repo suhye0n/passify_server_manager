@@ -61,13 +61,13 @@ export class TagService {
     return tag;
   }
 
-  public async createTag(tagData: CreateTagDto): Promise<Tag> {
+  public async createTag(userId: number, tagData: CreateTagDto): Promise<Tag> {
     const existingTag: Tag = await DB.Tags.findOne({
-      where: { name: tagData.name, userId: tagData.userId },
+      where: { name: tagData.name, userId },
     });
     if (existingTag) throw new HttpException(409, `This name ${tagData.name} already exists`);
 
-    const newTag: Tag = await DB.Tags.create(tagData);
+    const newTag: Tag = await DB.Tags.create({ ...tagData, userId });
     return newTag;
   }
 

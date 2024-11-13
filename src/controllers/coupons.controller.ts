@@ -32,10 +32,12 @@ export class CouponController {
     }
   };
 
-  public createCoupon = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createCoupon = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const couponData: CreateCouponDto = req.body;
-      const newCoupon: Coupon = await this.couponService.createCoupon(couponData);
+      const userId = req.user.id;
+
+      const newCoupon: Coupon = await this.couponService.createCoupon(userId, couponData);
       res.status(201).json({ data: newCoupon, message: 'created' });
     } catch (error) {
       next(error);

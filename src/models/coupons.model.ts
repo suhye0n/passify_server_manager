@@ -7,7 +7,7 @@ export class CouponModel extends Model<Coupon, CouponCreationAttributes> impleme
   public id: number;
   public userId: number;
   public titleId?: number; // TODO: 필수값으로 변경
-  public name: string; // TODO: 삭제
+  public name?: string; // TODO: 삭제
   public barcode: string;
   public memo?: string;
   public tagId?: number;
@@ -47,7 +47,7 @@ export default function (sequelize: Sequelize): typeof CouponModel {
       },
       name: {
         // TODO: 삭제
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING(45),
       },
       barcode: {

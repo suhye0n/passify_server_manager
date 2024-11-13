@@ -1,10 +1,6 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength, MaxLength, IsInt, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateTagDto {
-  @IsNotEmpty()
-  @IsInt()
-  public userId: number;
-
   @IsNotEmpty()
   @IsString()
   public name: string;

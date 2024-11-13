@@ -32,10 +32,12 @@ export class TagController {
     }
   };
 
-  public createTag = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public createTag = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const tagData: CreateTagDto = req.body;
-      const newTag: Tag = await this.tagService.createTag(tagData);
+      const userId = req.user.id;
+
+      const newTag: Tag = await this.tagService.createTag(userId, tagData);
       res.status(201).json({ data: newTag, message: 'created' });
     } catch (error) {
       next(error);
