@@ -1,5 +1,5 @@
 import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
-import { CouponType } from '@interfaces/coupons.interface';
+import { PassType } from '@interfaces/passes.interface';
 
 export class CreateTitleDto {
   @IsNotEmpty()
@@ -7,8 +7,8 @@ export class CreateTitleDto {
   public name: string;
 
   @IsNotEmpty()
-  @IsEnum(CouponType)
-  public type: CouponType;
+  @IsEnum(PassType)
+  public type: PassType;
 
   @IsOptional()
   @IsString()
@@ -21,8 +21,8 @@ export class UpdateTitleDto {
   public name?: string;
 
   @IsOptional()
-  @IsEnum(CouponType)
-  public type?: CouponType;
+  @IsEnum(PassType)
+  public type?: PassType;
 
   @IsOptional()
   @IsString()

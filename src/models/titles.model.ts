@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 import { Title } from '@interfaces/titles.interface';
-import { CouponType } from '@interfaces/coupons.interface';
+import { PassType } from '@interfaces/passes.interface';
 
 export type TitleCreationAttributes = Optional<Title, 'id' | 'userId' | 'type' | 'icon'>;
 
@@ -8,7 +8,7 @@ export class TitleModel extends Model<Title, TitleCreationAttributes> implements
   public id: number;
   public userId?: number;
   public name: string;
-  public type: CouponType;
+  public type: PassType;
   public icon?: string;
 
   public readonly createdAt!: Date;
@@ -38,9 +38,9 @@ export default function (sequelize: Sequelize): typeof TitleModel {
         type: DataTypes.STRING(45),
       },
       type: {
-        type: DataTypes.ENUM(...Object.values(CouponType)),
+        type: DataTypes.ENUM(...Object.values(PassType)),
         allowNull: false,
-        defaultValue: CouponType.COUPON,
+        defaultValue: PassType.COUPON,
       },
       icon: {
         type: DataTypes.STRING,

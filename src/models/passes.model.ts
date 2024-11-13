@@ -1,9 +1,9 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
-import { Coupon, CouponType } from '@interfaces/coupons.interface';
+import { Pass, PassType } from '@interfaces/passes.interface';
 
-export type CouponCreationAttributes = Optional<Coupon, 'id' | 'barcode' | 'memo' | 'userId' | 'type'>;
+export type PassCreationAttributes = Optional<Pass, 'id' | 'barcode' | 'memo' | 'userId' | 'type'>;
 
-export class CouponModel extends Model<Coupon, CouponCreationAttributes> implements Coupon {
+export class PassModel extends Model<Pass, PassCreationAttributes> implements Pass {
   public id: number;
   public userId: number;
   public titleId?: number; // TODO: 필수값으로 변경
@@ -11,14 +11,14 @@ export class CouponModel extends Model<Coupon, CouponCreationAttributes> impleme
   public barcode: string;
   public memo?: string;
   public tagId?: number;
-  public type: CouponType;
+  public type: PassType;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default function (sequelize: Sequelize): typeof CouponModel {
-  CouponModel.init(
+export default function (sequelize: Sequelize): typeof PassModel {
+  PassModel.init(
     {
       id: {
         autoIncrement: true,
@@ -69,13 +69,13 @@ export default function (sequelize: Sequelize): typeof CouponModel {
         onUpdate: 'CASCADE',
       },
       type: {
-        type: DataTypes.ENUM(...Object.values(CouponType)),
+        type: DataTypes.ENUM(...Object.values(PassType)),
         allowNull: false,
-        defaultValue: CouponType.COUPON,
+        defaultValue: PassType.COUPON,
       },
     },
     {
-      tableName: 'coupons',
+      tableName: 'passes',
       sequelize,
       defaultScope: {
         raw: true,
@@ -83,5 +83,5 @@ export default function (sequelize: Sequelize): typeof CouponModel {
     },
   );
 
-  return CouponModel;
+  return PassModel;
 }

@@ -1,7 +1,7 @@
 {
-  "name": "pointify_server_manager",
+  "name": "passify_server_manager",
   "version": "0.0.0",
-  "description": "Pointify API Server",
+  "description": "passify API Server",
   "author": "suhye0n",
   "license": "MIT",
   "scripts": {

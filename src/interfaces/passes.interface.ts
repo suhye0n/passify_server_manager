@@ -1,10 +1,11 @@
-export enum CouponType {
+export enum PassType {
   COUPON = 'COUPON',
   CARD = 'CARD',
   POINT = 'POINT',
+  MEMBERSHIP = 'MEMBERSHIP',
 }
 
-export interface Coupon {
+export interface Pass {
   id?: number;
   userId: number;
   titleId?: number; // TODO: 필수값으로 변경
@@ -12,5 +13,5 @@ export interface Coupon {
   barcode: string;
   memo?: string;
   tagId?: number;
-  type: CouponType;
+  type: PassType;
 }

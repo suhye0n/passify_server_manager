@@ -1,9 +1,9 @@
-import { CouponType } from '@interfaces/coupons.interface';
+import { PassType } from '@interfaces/passes.interface';
 
 export interface Title {
   id?: number;
   userId?: number;
   name: string;
-  type: CouponType;
+  type: PassType;
   icon?: string;
 }

@@ -18,10 +18,10 @@ jobs:
         uses: cloudtype-github-actions/deploy@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: suhye0n/pointify
+          project: suhye0n/passify
           stage: main
           yaml: |
-            name: pointify-server-manager
+            name: passify-server-manager
             app: node@18
             options:
               ports: "3000"
@@ -40,7 +40,7 @@ jobs:
                 - name: DB_PORT
                   value: "30241"
                 - name: DB_DATABASE
-                  value: pointify
+                  value: passify
                 - name: SECRET_KEY
                   value: secretKey
                 - name: LOG_FORMAT

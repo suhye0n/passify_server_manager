@@ -1,7 +1,7 @@
 import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
-import { CouponType } from '@interfaces/coupons.interface';
+import { PassType } from '@interfaces/passes.interface';
 
-export class CreateCouponDto {
+export class CreatePassDto {
   @IsOptional() // TODO: 필수값으로 변경
   @IsInt()
   public titleId?: number;
@@ -23,11 +23,11 @@ export class CreateCouponDto {
   public tagId?: number;
 
   @IsNotEmpty()
-  @IsEnum(CouponType)
-  public type: CouponType;
+  @IsEnum(PassType)
+  public type: PassType;
 }
 
-export class UpdateCouponDto {
+export class UpdatePassDto {
   @IsOptional()
   @IsInt()
   public titleId?: number;
@@ -49,6 +49,6 @@ export class UpdateCouponDto {
   public tagId?: number;
 
   @IsOptional()
-  @IsEnum(CouponType)
-  public type?: CouponType;
+  @IsEnum(PassType)
+  public type?: PassType;
 }

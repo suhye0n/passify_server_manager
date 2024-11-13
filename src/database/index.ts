@@ -3,7 +3,7 @@ import { NODE_ENV, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } from '@
 import { logger } from '@utils/logger';
 
 import UserModel from '@models/users.model';
-import CouponModel from '@models/coupons.model';
+import PassModel from '@models/passes.model';
 import TagModel from '@models/tags.model';
 import TitleModel from '@models/titles.model';
 
@@ -34,7 +34,7 @@ sequelize
 
 export const DB = {
   Users: UserModel(sequelize),
-  Coupons: CouponModel(sequelize),
+  Passes: PassModel(sequelize),
   Tags: TagModel(sequelize),
   Titles: TitleModel(sequelize),
   sequelize,
