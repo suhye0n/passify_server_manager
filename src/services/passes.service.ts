@@ -49,6 +49,20 @@ export class PassService {
       offset,
       limit,
       order: [['createdAt', 'DESC']],
+      include: [
+        {
+          model: DB.Tags,
+          as: 'tag',
+          required: false,
+        },
+        {
+          model: DB.Titles,
+          as: 'title',
+          required: false,
+        },
+      ],
+      raw: false,
+      nest: true,
     });
 
     return { passes, count };

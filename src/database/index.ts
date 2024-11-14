@@ -32,11 +32,26 @@ sequelize
   .then(() => logger.info('Database connection successful.'))
   .catch(err => logger.error('Database connection failed:', err));
 
+const Users = UserModel(sequelize);
+const Passes = PassModel(sequelize);
+const Tags = TagModel(sequelize);
+const Titles = TitleModel(sequelize);
+
+Passes.belongsTo(Tags, { foreignKey: 'tagId', as: 'tag' });
+Passes.belongsTo(Titles, { foreignKey: 'titleId', as: 'title' });
+Tags.hasMany(Passes, { foreignKey: 'tagId', as: 'passes' });
+Titles.hasMany(Passes, { foreignKey: 'titleId', as: 'passes' });
+
+sequelize
+  .sync({ force: false })
+  .then(() => logger.info('Database sync complete'))
+  .catch(err => logger.error('Database sync failed:', err));
+
 export const DB = {
-  Users: UserModel(sequelize),
-  Passes: PassModel(sequelize),
-  Tags: TagModel(sequelize),
-  Titles: TitleModel(sequelize),
+  Users,
+  Passes,
+  Tags,
+  Titles,
   sequelize,
   Sequelize,
 };
