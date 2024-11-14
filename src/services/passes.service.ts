@@ -69,7 +69,23 @@ export class PassService {
   }
 
   public async findPassById(passId: number): Promise<Pass> {
-    const pass: Pass = await DB.Passes.findByPk(passId);
+    const pass: Pass = await DB.Passes.findByPk(passId, {
+      include: [
+        {
+          model: DB.Tags,
+          as: 'tag',
+          required: false,
+        },
+        {
+          model: DB.Titles,
+          as: 'title',
+          required: false,
+        },
+      ],
+      raw: false,
+      nest: true,
+    });
+
     if (!pass) throw new HttpException(409, "Pass doesn't exist");
 
     return pass;
