@@ -16,7 +16,10 @@ export class TitleService {
     fromDate?: Date,
     toDate?: Date,
   ): Promise<{ titles: Title[]; count: number }> {
-    const whereOptions: any = { userId };
+    const whereOptions: any = {
+      [Op.or]: [{ userId: null }, { userId }],
+    };
+
     const modelAttributes = Object.keys(DB.Titles.rawAttributes);
 
     for (const [key, value] of Object.entries(query)) {
@@ -49,7 +52,10 @@ export class TitleService {
       where: whereOptions,
       offset,
       limit,
-      order: [['createdAt', 'DESC']],
+      order: [
+        [DB.Sequelize.literal('userId IS NULL'), 'DESC'],
+        ['createdAt', 'ASC'],
+      ],
     });
 
     return { titles, count };
