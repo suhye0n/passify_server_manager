@@ -78,9 +78,13 @@ export class TitleService {
     return newTitle;
   }
 
-  public async updateTitle(titleId: number, titleData: UpdateTitleDto): Promise<Title> {
+  public async updateTitle(userId: number, titleId: number, titleData: UpdateTitleDto): Promise<Title> {
     const titleToUpdate: Title = await DB.Titles.findByPk(titleId);
     if (!titleToUpdate) throw new HttpException(409, "Title doesn't exist");
+
+    if (titleToUpdate.userId !== userId) {
+      throw new HttpException(403, 'You do not have permission to update this title');
+    }
 
     if (titleData.icon && titleData.icon !== titleToUpdate.icon) {
       const oldIconPath = titleToUpdate.icon;
@@ -104,9 +108,13 @@ export class TitleService {
     return updatedTitle;
   }
 
-  public async deleteTitle(titleId: number): Promise<Title> {
+  public async deleteTitle(userId: number, titleId: number): Promise<Title> {
     const titleToDelete: Title = await DB.Titles.findByPk(titleId);
     if (!titleToDelete) throw new HttpException(409, "Title doesn't exist");
+
+    if (titleToDelete.userId !== userId) {
+      throw new HttpException(403, 'You do not have permission to delete this title');
+    }
 
     if (titleToDelete.icon) {
       deleteFile(titleToDelete.icon);

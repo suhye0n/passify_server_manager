@@ -44,23 +44,27 @@ export class TitleController {
     }
   };
 
-  public updateTitle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public updateTitle = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const titleId = Number(req.params.id);
       const icon = req.file ? `/uploads/icons/${req.file.filename}` : null;
 
       const titleData: UpdateTitleDto = req.body;
-      const updatedTitle: Title = await this.titleService.updateTitle(titleId, { ...titleData, icon });
+      const userId = req.user.id;
+
+      const updatedTitle: Title = await this.titleService.updateTitle(userId, titleId, { ...titleData, icon });
       res.status(200).json({ data: updatedTitle, message: 'updated' });
     } catch (error) {
       next(error);
     }
   };
 
-  public deleteTitle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public deleteTitle = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const titleId = Number(req.params.id);
-      const deletedTitle: Title = await this.titleService.deleteTitle(titleId);
+      const userId = req.user.id;
+
+      const deletedTitle: Title = await this.titleService.deleteTitle(userId, titleId);
       res.status(200).json({ data: deletedTitle, message: 'deleted' });
     } catch (error) {
       next(error);
