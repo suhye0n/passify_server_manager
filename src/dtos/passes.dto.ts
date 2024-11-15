@@ -2,13 +2,9 @@ import { IsString, IsInt, IsNotEmpty, IsOptional, IsEnum } from 'class-validator
 import { PassType } from '@interfaces/passes.interface';
 
 export class CreatePassDto {
-  @IsOptional() // TODO: 필수값으로 변경
+  @IsNotEmpty()
   @IsInt()
-  public titleId?: number;
-
-  @IsOptional()
-  @IsString()
-  public name?: string; // TODO: 삭제
+  public titleId: number;
 
   @IsNotEmpty()
   @IsString()
@@ -31,10 +27,6 @@ export class UpdatePassDto {
   @IsOptional()
   @IsInt()
   public titleId?: number;
-
-  @IsOptional()
-  @IsString()
-  public name?: string; // TODO: 삭제
 
   @IsOptional()
   @IsString()

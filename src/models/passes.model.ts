@@ -6,8 +6,7 @@ export type PassCreationAttributes = Optional<Pass, 'id' | 'barcode' | 'memo' | 
 export class PassModel extends Model<Pass, PassCreationAttributes> implements Pass {
   public id: number;
   public userId: number;
-  public titleId?: number; // TODO: 필수값으로 변경
-  public name?: string; // TODO: 삭제
+  public titleId: number;
   public barcode: string;
   public memo?: string;
   public tagId?: number;
@@ -37,18 +36,13 @@ export default function (sequelize: Sequelize): typeof PassModel {
       },
       titleId: {
         type: DataTypes.INTEGER,
-        allowNull: true, // TODO: 필수값으로 변경
+        allowNull: false,
         references: {
           model: 'titles',
           key: 'id',
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
-      },
-      name: {
-        // TODO: 삭제
-        allowNull: true,
-        type: DataTypes.STRING(45),
       },
       barcode: {
         allowNull: false,
